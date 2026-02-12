@@ -1,4 +1,5 @@
 #!/bin/sh
+# axon | AU
 file="/etc/sysctl.conf"
 echo "net.ipv4.tcp_syncookies = 1" >> $file
 echo "net.ipv4.tcp_synack_retries = 2" >> $file

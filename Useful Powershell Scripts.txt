@@ -1,0 +1,137 @@
+# Useful Commands / Scripts
+#### PowerView
+
+```powershell
+# Download standalone PowerView
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/PowerView.ps1" -OutFile "PowerView.ps1"
+
+# Import PowerView
+Import-Module .\PowerView.ps1
+
+# Or execute directly
+. .\PowerView.ps1
+```
+
+User Enumeration:
+```powershell
+# Get all domain users
+Get-DomainUser
+
+# Get specific user
+Get-DomainUser -Identity administrator
+
+# Get users with specific properties
+Get-DomainUser -Properties samaccountname,description,pwdlastset
+
+# Get users with SPN set (Kerberoastable)
+Get-DomainUser -SPN
+
+# Get users with pre-authentication disabled (AS-REP Roastable)
+Get-DomainUser -PreauthNotRequired
+
+# Get privileged users
+Get-DomainUser -AdminCount
+
+# Get users with passwords not required
+Get-DomainUser -PasswordNotRequired
+```
+Enumeration outline:
+```powershell
+# Phased approach
+# Phase 1: Basic domain information
+Get-Domain
+Get-DomainController
+
+# Phase 2: User and group enumeration
+Get-DomainUser -Properties samaccountname,description
+Get-DomainGroup -Properties samaccountname,description
+
+# Phase 3: Privilege analysis
+Get-DomainUser -AdminCount
+Find-InterestingDomainAcl
+
+# Phase 4: Attack vector identification
+Get-DomainUser -SPN
+Find-LocalAdminAccess
+```
+
+##### Task Scheduler Enumeration
+Powershell one liner for searching all task scheduler tasks for "powershell":
+```
+`Get-ScheduledTask | Where-Object {($_.Actions | Out-String) -like "*powershell*"} | ForEach-Object {[PSCustomObject]@{TaskName=$_.TaskName; TaskPath=$_.TaskPath; State=$_.State; Execute=$_.Actions.Execute; Arguments=$_.Actions.Arguments}}`
+```
+
+Powershell one-liner to filter out Task Scheduler tasks that are by microsoft and show only User made scheduled tasks:
+```
+Get-ScheduledTask | Where-Object {$_.Author -notlike "*Microsoft*" -and $_.Author -ne $null} | Select-Object TaskName, State, Author | Format-Table -AutoSize
+```
+
+Powershell one-liner to list Scheduled Tasks, Paths, and Authors (expansive):
+```
+Get-ScheduledTask | Select-Object TaskName, TaskPath, State, Author | Sort-Object Author | Format-Table -AutoSize
+```
+
+list all enabled scheduled tasks sorted by their creation date. Moreover, we will output the creation date and author to add more context to each task.
+```powershell
+Get-ScheduledTask | Where-Object {$_.Date —ne $null —and $_.State —ne "Disabled"} | Sort-Object Date | select Date,TaskName,Author,State,TaskPath | ft
+```
+
+Powershell oneliner to get "Actions" and other info from a specified scheduled task "TaskName":
+`(Get-ScheduledTask -TaskName "YourTaskName").Actions | Format-List *`
+
+
+---
+##### ConsoleHost_history Enumeration
+PowerShell One-liner that gets the ConsoleHost_history from every user on the machine: `
+```powershell
+Get-ChildItem C:\Users\*\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt -Force -ErrorAction SilentlyContinue | ForEach-Object { Write-Host "`n=== $($_.FullName) ===`n" -ForegroundColor Cyan; Get-Content $_ }
+```
+
+---
+##### Services Enumeration
+Powershell oneliner that finds some suspicious services (not comprehensive):
+`Get-WmiObject Win32_Service | Where-Object {$_.PathName -match '\\(Temp|AppData|Downloads|Desktop|Users\\Public)\\' -or $_.Name -match '(svchost|csrss|lsass|winlogon)32' -or ($_.PathName -notmatch '^"?C:\\(Windows|Program Files)' -and $_.PathName -notmatch 'svchost\.exe')} | Select-Object Name,DisplayName,State,PathName,StartMode | Format-Table -AutoSize`
+
+---
+##### User Enumeration
+powershell oneliner for all users, their domain, SID, RID
+```
+Get-WmiObject Win32_UserAccount | Select-Object Name, Domain, SID, @{Name='RID';Expression={$_.SID.Split('-')[-1]}}
+```
+
+PowerShell oneliner for all groups and which users are in each group:
+```
+Get-LocalGroup | ForEach-Object { [PSCustomObject]@{Group=$_.Name; Members=(Get-LocalGroupMember $_.Name).Name -join ', '} }
+```
+
+---
+#### Show Networking Connections, Associated Processes, DNS
+PowerShell oneliner Show TCP Connections and Associated Processes:
+```shell-session
+Get-NetTCPConnection | select LocalAddress,localport,remoteaddress,remoteport,state,@{name="process";Expression={(get-process -id $_.OwningProcess).ProcessName}}, @{Name="cmdline";Expression={(Get-WmiObject Win32_Process -filter "ProcessId = $($_.OwningProcess)").commandline}} | sort Remoteaddress -Descending | ft -wrap -autosize
+```
+
+Show UDP Connections Powershell oneliner:
+```shell-powershell
+Get-NetUDPEndpoint | select local*,creationtime, remote* | ft -autosize
+```
+
+Sort and Unique Remote IPs:
+```shell-session
+(Get-NetTCPConnection).remoteaddress | Sort-Object -Unique
+```
+
+Investigating a specific IP oneliner:
+```shell-session
+Get-NetTCPConnection -remoteaddress 51.15.43.212 | select state, creationtime, localport,remoteport | ft -autosize
+```
+
+Retrieve DNS cache:
+```shell-powershell
+Get-DnsClientCache | ? Entry -NotMatch "workst|servst|memes|kerb|ws|ocsp" | out-string -width 1000
+```
+
+Enumerate Hosts File
+````shell-powershell
+gc -tail 4 "C:\Windows\System32\Drivers\etc\hosts"
+````

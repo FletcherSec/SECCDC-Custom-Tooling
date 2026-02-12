@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# axon
+# axon | AU
 set -euo pipefail
 
 # One-file installer
@@ -305,7 +305,7 @@ Environment=INTERVAL=15
 WantedBy=multi-user.target
 EOF
 
-# Now run the exact command sequence you provided :contentReference[oaicite:3]{index=3}
+# Now turn it all on lol
 chmod +x /usr/local/sbin/systemd-map.sh
 chmod +x /usr/local/sbin/systemd-map-seed.sh
 

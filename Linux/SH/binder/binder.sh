@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# axon
+# axon | AU
 set -euo pipefail
 
 need_root() {

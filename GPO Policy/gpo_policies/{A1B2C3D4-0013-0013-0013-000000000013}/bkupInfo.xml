@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<BackupInst xmlns="http://www.microsoft.com/GroupPolicy/GPOOperations/Manifest">
+  <GPOGuid>{A1B2C3D4-0013-0013-0013-000000000013}</GPOGuid>
+  <GPODomain>YOURDOMAIN.LOCAL</GPODomain>
+  <GPODomainGuid>{00000000-0000-0000-0000-000000000000}</GPODomainGuid>
+  <GPODomainController>DC.YOURDOMAIN.LOCAL</GPODomainController>
+  <BackupTime>2024-01-01T00:00:00</BackupTime>
+  <ID>{A1B2C3D4-0013-0013-0013-000000000013}</ID>
+  <Comment>SEC - WinRM Hardening</Comment>
+</BackupInst>

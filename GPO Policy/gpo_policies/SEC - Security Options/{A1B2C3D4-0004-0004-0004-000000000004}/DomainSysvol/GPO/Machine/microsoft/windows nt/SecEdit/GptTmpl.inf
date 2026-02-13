@@ -1,0 +1,16 @@
+[Unicode]
+Unicode=yes
+[Registry Values]
+MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\DontDisplayLastUserName=4,1
+MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\DisableCAD=4,0
+MACHINE\System\CurrentControlSet\Control\Lsa\LmCompatibilityLevel=4,5
+MACHINE\System\CurrentControlSet\Control\Lsa\NoLMHash=4,1
+MACHINE\System\CurrentControlSet\Control\Lsa\RestrictAnonymous=4,1
+MACHINE\System\CurrentControlSet\Control\Lsa\RestrictAnonymousSAM=4,1
+MACHINE\System\CurrentControlSet\Control\Lsa\EveryoneIncludesAnonymous=4,0
+MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\EnableLUA=4,1
+MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\PromptOnSecureDesktop=4,1
+MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\RestrictNullSessAccess=4,1
+[Version]
+signature="$CHICAGO$"
+Revision=1

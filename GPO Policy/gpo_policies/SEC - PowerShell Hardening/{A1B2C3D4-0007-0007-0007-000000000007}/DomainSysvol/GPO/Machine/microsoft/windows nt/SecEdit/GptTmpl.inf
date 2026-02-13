@@ -1,0 +1,13 @@
+[Unicode]
+Unicode=yes
+[Registry Values]
+MACHINE\Software\Policies\Microsoft\Windows\PowerShell\EnableScripts=4,1
+MACHINE\Software\Policies\Microsoft\Windows\PowerShell\ExecutionPolicy=1,"RemoteSigned"
+MACHINE\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging\EnableScriptBlockLogging=4,1
+MACHINE\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging\EnableScriptBlockInvocationLogging=4,1
+MACHINE\Software\Policies\Microsoft\Windows\PowerShell\ModuleLogging\EnableModuleLogging=4,1
+MACHINE\Software\Wow6432Node\Policies\Microsoft\Windows\PowerShell\EnableScripts=4,1
+MACHINE\Software\Wow6432Node\Policies\Microsoft\Windows\PowerShell\ExecutionPolicy=1,"RemoteSigned"
+[Version]
+signature="$CHICAGO$"
+Revision=1

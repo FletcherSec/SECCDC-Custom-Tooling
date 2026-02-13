@@ -1,0 +1,26 @@
+[Unicode]
+Unicode=yes
+[Event Audit]
+AuditSystemEvents = 3
+AuditLogonEvents = 3
+AuditObjectAccess = 2
+AuditPrivilegeUse = 2
+AuditPolicyChange = 3
+AuditAccountManage = 3
+AuditProcessTracking = 1
+AuditDSAccess = 3
+AuditAccountLogon = 3
+[Registry Values]
+MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\AuditProcessCreationIncludeCmdLine_Enabled=4,1
+[System Log]
+MaximumLogSize = 65536
+AuditLogRetentionPeriod = 0
+[Security Log]
+MaximumLogSize = 1048576
+AuditLogRetentionPeriod = 0
+[Application Log]
+MaximumLogSize = 65536
+AuditLogRetentionPeriod = 0
+[Version]
+signature="$CHICAGO$"
+Revision=1

@@ -1,0 +1,16 @@
+[Unicode]
+Unicode=yes
+[Privilege Rights]
+SeNetworkLogonRight = *S-1-5-32-544,*S-1-5-11
+SeDenyNetworkLogonRight = *S-1-5-32-546,Guest
+SeInteractiveLogonRight = *S-1-5-32-544,*S-1-5-32-545
+SeDenyInteractiveLogonRight = *S-1-5-32-546,Guest
+SeRemoteInteractiveLogonRight = *S-1-5-32-555
+SeDenyRemoteInteractiveLogonRight = *S-1-5-32-546,Guest
+SeDebugPrivilege = *S-1-5-32-544
+SeTcbPrivilege =
+SeCreateTokenPrivilege =
+SeAssignPrimaryTokenPrivilege =
+[Version]
+signature="$CHICAGO$"
+Revision=1

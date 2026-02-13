@@ -1,0 +1,38 @@
+[Unicode]
+Unicode=yes
+[Registry Values]
+; ---- Disable SMBv1 Server-side ----
+MACHINE\System\CurrentControlSet\Services\LanmanServer\Parameters\SMB1=4,0
+; ---- Disable SMBv1 Client driver ----
+MACHINE\System\CurrentControlSet\Services\mrxsmb10\Start=4,4
+; ---- Disable SMBv2/3 server (set to 1 to re-enable) ----
+; Uncomment below only if you need to fully disable SMBv2 - not recommended in most environments
+;MACHINE\System\CurrentControlSet\Services\LanmanServer\Parameters\SMB2=4,0
+; ---- Require SMB signing on SERVER (clients must sign) ----
+MACHINE\System\CurrentControlSet\Services\LanmanServer\Parameters\RequireSecuritySignature=4,1
+; ---- Enable SMB signing on SERVER ----
+MACHINE\System\CurrentControlSet\Services\LanmanServer\Parameters\EnableSecuritySignature=4,1
+; ---- Require SMB signing on CLIENT ----
+MACHINE\System\CurrentControlSet\Services\LanmanWorkstation\Parameters\RequireSecuritySignature=4,1
+; ---- Enable SMB signing on CLIENT ----
+MACHINE\System\CurrentControlSet\Services\LanmanWorkstation\Parameters\EnableSecuritySignature=4,1
+; ---- Disable SMB compression (prevents attack CVE-2020-0796 style issues) ----
+MACHINE\System\CurrentControlSet\Services\LanmanServer\Parameters\DisableCompression=4,1
+; ---- Disable null session shares ----
+MACHINE\System\CurrentControlSet\Services\LanmanServer\Parameters\RestrictNullSessAccess=4,1
+; ---- Disable admin shares (workstations) ----
+MACHINE\System\CurrentControlSet\Services\LanmanServer\Parameters\AutoShareWks=4,0
+; ---- Disable admin shares (servers) - set to 1 to re-enable for servers ----
+MACHINE\System\CurrentControlSet\Services\LanmanServer\Parameters\AutoShareServer=4,0
+; ---- Set max SMB dialect to SMB3 (disable fallback to older versions) ----
+MACHINE\System\CurrentControlSet\Services\LanmanServer\Parameters\MaxSMB2Dialects=4,785
+; ---- Encrypt SMB3 traffic (requires SMBv3 clients) ----
+MACHINE\System\CurrentControlSet\Services\LanmanServer\Parameters\EncryptData=4,1
+; ---- Disable NTLM for SMB authentication (use Kerberos) ----
+MACHINE\System\CurrentControlSet\Control\Lsa\MSV1_0\RestrictReceivingNTLMTraffic=4,2
+MACHINE\System\CurrentControlSet\Control\Lsa\MSV1_0\RestrictSendingNTLMTraffic=4,2
+; ---- Audit NTLM authentication in this domain ----
+MACHINE\System\CurrentControlSet\Control\Lsa\MSV1_0\AuditReceivingNTLMTraffic=4,2
+[Version]
+signature="$CHICAGO$"
+Revision=1

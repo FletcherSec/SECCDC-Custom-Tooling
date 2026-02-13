@@ -1,0 +1,10 @@
+[Unicode]
+Unicode=yes
+[System Access]
+MinimumPasswordLength = 14
+PasswordComplexity = 0
+PasswordHistorySize = 0
+ClearTextPassword = 0
+[Version]
+signature="$CHICAGO$"
+Revision=1

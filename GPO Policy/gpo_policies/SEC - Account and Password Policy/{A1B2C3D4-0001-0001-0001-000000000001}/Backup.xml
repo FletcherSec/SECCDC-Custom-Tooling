@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GroupPolicyBackupScheme xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.microsoft.com/GroupPolicy/GPOOperations/Manifest">
+  <GroupPolicyObject>
+    <GPOGuid>{A1B2C3D4-0001-0001-0001-000000000001}</GPOGuid>
+    <GPODomain>YOURDOMAIN.LOCAL</GPODomain>
+    <GPODomainGuid>{00000000-0000-0000-0000-000000000000}</GPODomainGuid>
+    <GPODomainController>DC.YOURDOMAIN.LOCAL</GPODomainController>
+    <CreatedTime>2024-01-01T00:00:00</CreatedTime>
+    <BackedUpTime>2024-01-01T00:00:00</BackedUpTime>
+    <GPODisplayName>SEC - Account and Password Policy</GPODisplayName>
+    <GPOPrimaryExtensions>
+      <Identifier>{827D319E-6EAC-11D2-A4EA-00C04F79F83A}</Identifier>
+    </GPOPrimaryExtensions>
+    <GPOMachineExtensions>
+      <Identifier>{827D319E-6EAC-11D2-A4EA-00C04F79F83A}</Identifier>
+    </GPOMachineExtensions>
+    <GPOUserExtensions/>
+    <FilePath>/home/claude/gpo_policies/SEC - Account and Password Policy/{A1B2C3D4-0001-0001-0001-000000000001}/DomainSysvol/GPO</FilePath>
+  </GroupPolicyObject>
+</GroupPolicyBackupScheme>

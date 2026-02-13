@@ -1,0 +1,36 @@
+[Unicode]
+Unicode=yes
+[Registry Values]
+; ---- Disable unencrypted WinRM traffic on SERVICE side ----
+MACHINE\Software\Policies\Microsoft\Windows\WinRM\Service\AllowUnencryptedTraffic=4,0
+; ---- Disable unencrypted WinRM traffic on CLIENT side ----
+MACHINE\Software\Policies\Microsoft\Windows\WinRM\Client\AllowUnencryptedTraffic=4,0
+; ---- Disable Basic authentication on CLIENT (sends credentials in cleartext) ----
+MACHINE\Software\Policies\Microsoft\Windows\WinRM\Client\AllowBasic=4,0
+; ---- Disable Basic authentication on SERVICE ----
+MACHINE\Software\Policies\Microsoft\Windows\WinRM\Service\AllowBasic=4,0
+; ---- Disable Digest authentication on CLIENT (weak, no replay protection) ----
+MACHINE\Software\Policies\Microsoft\Windows\WinRM\Client\AllowDigest=4,0
+; ---- Disable CredSSP authentication on CLIENT (prevents credential delegation) ----
+MACHINE\Software\Policies\Microsoft\Windows\WinRM\Client\AllowCredSSP=4,0
+; ---- Disable CredSSP authentication on SERVICE ----
+MACHINE\Software\Policies\Microsoft\Windows\WinRM\Service\AllowCredSSP=4,0
+; ---- Disable WinRM service auto-start (set to 2 to allow WinRM, 4 to disable) ----
+MACHINE\System\CurrentControlSet\Services\WinRM\Start=4,4
+; ---- Require Kerberos for WinRM service ----
+MACHINE\Software\Policies\Microsoft\Windows\WinRM\Service\AllowKerberos=4,1
+; ---- Require Kerberos for WinRM client ----
+MACHINE\Software\Policies\Microsoft\Windows\WinRM\Client\AllowKerberos=4,1
+; ---- Disable WinRS (remote shell) access via WinRM ----
+MACHINE\Software\Policies\Microsoft\Windows\WinRM\Service\DisableRunAs=4,1
+; ---- Restrict WinRM to specific IP ranges (set value to your allowed IPs e.g. "192.168.1.0/24") ----
+; Uncomment and set to your admin subnet to restrict who can connect
+;MACHINE\Software\Policies\Microsoft\Windows\WinRM\Service\IPv4Filter=1,"192.168.1.0/24"
+;MACHINE\Software\Policies\Microsoft\Windows\WinRM\Service\IPv6Filter=1,""
+; ---- Disable PowerShell remoting via WinRM for non-admins ----
+MACHINE\Software\Policies\Microsoft\Windows\WinRM\Service\AllowRemoteShellAccess=4,0
+; ---- Set WinRM idle timeout (seconds) - disconnect idle sessions after 15 min ----
+MACHINE\Software\Policies\Microsoft\Windows\WinRM\Service\MaxTimeoutms=4,900000
+[Version]
+signature="$CHICAGO$"
+Revision=1

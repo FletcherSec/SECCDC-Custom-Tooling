@@ -1,0 +1,117 @@
+=====================================================
+  SEC GPO POLICIES - IMPORT INSTRUCTIONS
+=====================================================
+
+BEFORE YOU START
+----------------
+1. Open these files on your Domain Controller (DC)
+2. You need GPMC installed (Server Manager > Add Features)
+3. Run GPMC as Domain Admin
+
+STEP 1 - COPY FILES TO YOUR DC
+--------------------------------
+Copy the entire "gpo_policies" folder to your DC, e.g.:
+  C:\GPO_Import\gpo_policies\
+
+STEP 2 - OPEN GPMC
+-------------------
+  Win + R > gpmc.msc > Enter
+
+STEP 3 - IMPORT EACH GPO
+--------------------------
+For EACH policy folder (repeat for all 11):
+
+  a) In GPMC left pane, right-click "Group Policy Objects"
+  b) Click "New"
+  c) Name it exactly as the folder name (e.g. "SEC - Account and Password Policy")
+  d) Click OK
+  e) Right-click your new GPO > "Import Settings..."
+  f) Click Next > Next
+  g) For "Backup folder", browse to:
+       C:\GPO_Import\gpo_policies\SEC - Account and Password Policy\
+  h) Click Next - it will show the backup found
+  i) Click Next > Next > Finish
+
+Repeat for all 11 policies.
+
+STEP 4 - LINK EACH GPO TO THE RIGHT PLACE
+-------------------------------------------
+After importing, right-click the target OU or Domain root
+and select "Link an Existing GPO", then choose your policy.
+
+  SEC - Account and Password Policy    --> Domain ROOT (required for domain passwords)
+  SEC - Audit and Logging Policy       --> Domain or target OU
+  SEC - User Rights Assignment         --> Domain or target OU
+  SEC - Security Options               --> Domain or target OU
+  SEC - Credential Protection          --> Domain or target OU
+  SEC - Windows Defender and ASR       --> Domain or target OU
+  SEC - PowerShell Hardening           --> Domain or target OU
+  SEC - Network Hardening              --> Domain or target OU
+  SEC - Remote Access Control          --> Domain or target OU
+  SEC - USB and Removable Media        --> Domain or target OU
+  SEC - Admin Workstation Hardening    --> Admin OU ONLY (not domain-wide)
+
+STEP 5 - UPDATE YOUR DOMAIN NAME
+----------------------------------
+The Backup.xml and bkupInfo.xml files reference "YOURDOMAIN.LOCAL"
+During import, GPMC will ask you to map this to your actual domain.
+Just select your domain from the dropdown when prompted.
+
+STEP 6 - VERIFY
+----------------
+On any target machine run:
+  gpupdate /force
+  gpresult /h C:\gp_report.html
+
+Then open C:\gp_report.html in a browser to confirm policies applied.
+
+=====================================================
+  POLICY SUMMARY
+=====================================================
+ 1. SEC - Account and Password Policy
+    Passwords: 14+ chars, complexity, 60-day expiry,
+    history 24, lockout at 5 attempts / 30 min
+
+ 2. SEC - Audit and Logging Policy
+    Full audit logging: logon, process, privilege,
+    policy change. Security log set to 1GB.
+
+ 3. SEC - User Rights Assignment
+    Restricts who can log on locally, via network,
+    and via RDP. Removes dangerous privileges.
+
+ 4. SEC - Security Options
+    Hides last username, requires CTRL+ALT+DEL,
+    blocks anonymous SAM enumeration, NTLMv2 only,
+    enables UAC Admin Approval Mode.
+
+ 5. SEC - Credential Protection
+    Disables WDigest (no plaintext passwords),
+    enables LSA Protection, enables Credential Guard.
+
+ 6. SEC - Windows Defender and ASR
+    Enables real-time protection, cloud protection,
+    and 9 Attack Surface Reduction rules.
+
+ 7. SEC - PowerShell Hardening
+    RemoteSigned execution policy, Script Block
+    Logging, Module Logging, Transcription enabled.
+
+ 8. SEC - Network Hardening
+    Disables SMBv1, LLMNR, NetBIOS. Enables
+    Windows Firewall on all profiles.
+
+ 9. SEC - Remote Access Control
+    NLA required for RDP, idle session timeouts,
+    disables unencrypted WinRM.
+
+10. SEC - USB and Removable Media
+    Blocks autorun, denies write/execute access
+    to removable storage devices.
+
+11. SEC - Admin Workstation Hardening
+    Stricter password (20 chars), lockout at 3
+    attempts, enhanced UAC, restricted browser access.
+    LINK TO ADMIN OU ONLY.
+
+=====================================================

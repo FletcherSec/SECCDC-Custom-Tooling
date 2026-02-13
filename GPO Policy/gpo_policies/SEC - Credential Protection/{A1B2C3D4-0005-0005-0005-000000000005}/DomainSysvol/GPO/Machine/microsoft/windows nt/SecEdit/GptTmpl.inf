@@ -1,0 +1,13 @@
+[Unicode]
+Unicode=yes
+[Registry Values]
+MACHINE\System\CurrentControlSet\Control\SecurityProviders\WDigest\UseLogonCredential=4,0
+MACHINE\System\CurrentControlSet\Control\Lsa\RunAsPPL=4,1
+MACHINE\System\CurrentControlSet\Control\Lsa\DisableRestrictedAdmin=4,0
+MACHINE\System\CurrentControlSet\Control\Lsa\DisableRestrictedAdminOutboundCreds=4,1
+MACHINE\System\CurrentControlSet\Control\DeviceGuard\EnableVirtualizationBasedSecurity=4,1
+MACHINE\System\CurrentControlSet\Control\DeviceGuard\RequirePlatformSecurityFeatures=4,3
+MACHINE\System\CurrentControlSet\Control\DeviceGuard\HypervisorEnforcedCodeIntegrity=4,1
+[Version]
+signature="$CHICAGO$"
+Revision=1

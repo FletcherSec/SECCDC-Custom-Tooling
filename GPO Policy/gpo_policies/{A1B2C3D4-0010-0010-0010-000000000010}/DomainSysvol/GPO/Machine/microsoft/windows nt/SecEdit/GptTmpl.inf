@@ -1,0 +1,12 @@
+[Unicode]
+Unicode=yes
+[Registry Values]
+MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoDriveTypeAutoRun=4,255
+MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoAutorun=4,1
+MACHINE\Software\Policies\Microsoft\Windows\RemovableStorageDevices\{53f5630d-b6bf-11d0-94f2-00a0c91efb8b}\Deny_Write=4,1
+MACHINE\Software\Policies\Microsoft\Windows\RemovableStorageDevices\{53f5630d-b6bf-11d0-94f2-00a0c91efb8b}\Deny_Execute=4,1
+MACHINE\Software\Policies\Microsoft\Windows\RemovableStorageDevices\{53f56311-b6bf-11d0-94f2-00a0c91efb8b}\Deny_Write=4,1
+MACHINE\Software\Policies\Microsoft\Windows\RemovableStorageDevices\{53f56311-b6bf-11d0-94f2-00a0c91efb8b}\Deny_Execute=4,1
+[Version]
+signature="$CHICAGO$"
+Revision=1

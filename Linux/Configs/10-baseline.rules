@@ -1,0 +1,87 @@
+## 10-baseline-fim.rules
+
+############################
+# General tuning (safe-ish)
+############################
+-b 8192
+-f 1
+
+############################
+# Time changes (high signal)
+############################
+-a always,exit -F arch=b64 -S adjtimex,settimeofday,clock_settime -k time-change
+-a always,exit -F arch=b32 -S adjtimex,settimeofday,clock_settime -k time-change
+
+############################
+# Kernel module activity
+############################
+-a always,exit -F arch=b64 -S init_module,finit_module,delete_module -k modules
+-a always,exit -F arch=b32 -S init_module,delete_module -k modules
+
+############################
+# Identity / account database changes (direct paths)
+############################
+-a always,exit -F arch=b64 -S openat,creat,truncate,ftruncate,rename,renameat,unlink,unlinkat \
+-F path=/etc/passwd -F perm=wa -k identity
+-a always,exit -F arch=b64 -S openat,creat,truncate,ftruncate,rename,renameat,unlink,unlinkat \
+-F path=/etc/group -F perm=wa -k identity
+-a always,exit -F arch=b64 -S openat,creat,truncate,ftruncate,rename,renameat,unlink,unlinkat \
+-F path=/etc/shadow -F perm=wa -k identity
+-a always,exit -F arch=b64 -S openat,creat,truncate,ftruncate,rename,renameat,unlink,unlinkat \
+-F path=/etc/gshadow -F perm=wa -k identity
+
+############################
+# Sudo (exec + config edits)
+############################
+-a always,exit -F arch=b64 -S execve,execveat -F path=/usr/bin/sudo -k sudo
+-a always,exit -F arch=b64 -S openat,creat,truncate,ftruncate,rename,renameat,unlink,unlinkat \
+-F path=/etc/sudoers -F perm=wa -k sudo
+-a always,exit -F arch=b64 -S openat,creat,truncate,ftruncate,rename,renameat,unlink,unlinkat \
+-F dir=/etc/sudoers.d -F perm=wa -k sudo
+
+############################
+# SSH (config + host keys + root keys)
+############################
+-a always,exit -F arch=b64 -S openat,creat,truncate,ftruncate,rename,renameat,unlink,unlinkat \
+-F path=/etc/ssh/sshd_config -F perm=wa -k ssh
+-a always,exit -F arch=b64 -S openat,creat,truncate,ftruncate,rename,renameat,unlink,unlinkat \
+-F dir=/etc/ssh -F perm=wa -k ssh
+
+-a always,exit -F arch=b64 -S openat,creat,truncate,ftruncate,rename,renameat,unlink,unlinkat \
+-F dir=/root/.ssh -F perm=wa -k ssh_keys
+
+############################
+# systemd unit persistence (very high value)
+############################
+-a always,exit -F arch=b64 -S openat,creat,truncate,ftruncate,rename,renameat,unlink,unlinkat \
+-F dir=/etc/systemd/system -F perm=wa -k systemd_persist
+-a always,exit -F arch=b64 -S openat,creat,truncate,ftruncate,rename,renameat,unlink,unlinkat \
+-F dir=/lib/systemd/system -F perm=wa -k systemd_persist
+
+############################
+# Cron persistence (high value)
+############################
+-a always,exit -F arch=b64 -S openat,creat,truncate,ftruncate,rename,renameat,unlink,unlinkat \
+-F path=/etc/crontab -F perm=wa -k cron_persist
+-a always,exit -F arch=b64 -S openat,creat,truncate,ftruncate,rename,renameat,unlink,unlinkat \
+-F dir=/etc/cron.d -F perm=wa -k cron_persist
+-a always,exit -F arch=b64 -S openat,creat,truncate,ftruncate,rename,renameat,unlink,unlinkat \
+-F dir=/etc/cron.hourly -F perm=wa -k cron_persist
+-a always,exit -F arch=b64 -S openat,creat,truncate,ftruncate,rename,renameat,unlink,unlinkat \
+-F dir=/etc/cron.daily -F perm=wa -k cron_persist
+-a always,exit -F arch=b64 -S openat,creat,truncate,ftruncate,rename,renameat,unlink,unlinkat \
+-F dir=/etc/cron.weekly -F perm=wa -k cron_persist
+-a always,exit -F arch=b64 -S openat,creat,truncate,ftruncate,rename,renameat,unlink,unlinkat \
+-F dir=/etc/cron.monthly -F perm=wa -k cron_persist
+
+# Spool locations differ by distro; include both common ones
+-a always,exit -F arch=b64 -S openat,creat,truncate,ftruncate,rename,renameat,unlink,unlinkat \
+-F dir=/var/spool/cron -F perm=wa -k cron_persist
+-a always,exit -F arch=b64 -S openat,creat,truncate,ftruncate,rename,renameat,unlink,unlinkat \
+-F dir=/var/spool/cron/crontabs -F perm=wa -k cron_persist
+
+############################
+# Audit config tampering
+############################
+-a always,exit -F arch=b64 -S openat,creat,truncate,ftruncate,rename,renameat,unlink,unlinkat \
+-F dir=/etc/audit -F perm=wa -k audit_tamper

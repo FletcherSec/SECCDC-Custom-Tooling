@@ -162,7 +162,9 @@ function Test-Prerequisites {
         $allGood = $false
     } else {
         Write-Status "ActiveDirectory module found" "OK"
-    }    if (-not (Test-Path $GPOBackupRoot)) {
+    }
+
+    if (-not (Test-Path $GPOBackupRoot)) {
         Write-Status "GPO backup root not found: $GPOBackupRoot" "ERROR"
         $allGood = $false
     } else {
